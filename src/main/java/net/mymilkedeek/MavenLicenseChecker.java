@@ -3,15 +3,20 @@ package net.mymilkedeek;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.logging.Log;
 
 /**
- * Echos an object string to the output screen.
- * @goal echo
- * @requiresProject false
+ * @goal check
+ * @phase compile
+ * @requiresProject true
  */
 public class MavenLicenseChecker extends AbstractMojo {
 
     public void execute() throws MojoExecutionException {
-        getLog().info("Starting Custom Maven goal");
+        final Log log = getLog();
+
+        log.info("Starting License Checker v 0.0.1");
+
+
     }
 }
