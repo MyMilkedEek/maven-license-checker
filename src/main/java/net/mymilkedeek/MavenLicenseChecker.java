@@ -69,7 +69,15 @@ public class MavenLicenseChecker extends AbstractMojo {
         if ( licenseIndex > 0 ) {
             int licenseEnd = pomContents.indexOf("</license>");
 
-            return pomContents.substring(licenseIndex, licenseEnd);
+            String licenseContents = pomContents.substring(licenseIndex, licenseEnd);
+
+            int nameIndex = licenseContents.indexOf("<name>");
+
+            if ( nameIndex > 0 ) {
+                int nameEnd = licenseContents.indexOf("</name>");
+
+                return licenseContents.substring(nameIndex + "<name>".length(), nameEnd);
+            }
         }
 
         return "Proprietary";
