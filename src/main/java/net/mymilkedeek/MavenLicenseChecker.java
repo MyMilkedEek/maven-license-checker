@@ -8,6 +8,10 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -36,10 +40,15 @@ public class MavenLicenseChecker extends AbstractMojo {
 
         Set<Artifact> artifacts = project.getDependencyArtifacts();
 
-        resolveArtifactLicenses(artifacts);
+        try {
+            resolveArtifactLicenses(artifacts);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new MojoExecutionException(e.getMessage(), e);
+        }
     }
 
-    private void resolveArtifactLicenses(Set<Artifact> artifacts) {
+    private void resolveArtifactLicenses(Set<Artifact> artifacts) throws IOException {
         getLog().info(artifacts.size() + " artifact(s) found.");
 
         for ( Artifact artifact : artifacts ) {
@@ -51,7 +60,18 @@ public class MavenLicenseChecker extends AbstractMojo {
         }
     }
 
-    private String getLicenseFromPomFile(File pomFile) {
+    private String getLicenseFromPomFile(File pomFile) throws IOException {
+        byte[] encodedBytes = Files.readAllBytes(Paths.get(pomFile.getAbsolutePath()));
+        String pomContents = new String(encodedBytes, StandardCharsets.UTF_8);
+
+        int licenseIndex = pomContents.indexOf("<license>");
+
+        if ( licenseIndex > 0 ) {
+            int licenseEnd = pomContents.indexOf("</license>");
+
+            return pomContents.substring(licenseIndex, licenseEnd);
+        }
+
         return "Proprietary";
     }
 
