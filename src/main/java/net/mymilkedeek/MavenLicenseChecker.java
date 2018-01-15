@@ -56,7 +56,7 @@ public class MavenLicenseChecker extends AbstractMojo {
             File artifactJar = artifact.getFile();
             File pomFile = new File(artifactJar.getAbsolutePath().replace(".jar", ".pom"));
             String licenseInPom = getLicenseFromPomFile(pomFile);
-            System.out.println();
+            getLog().info("   - " + licenseInPom + " license found for " + artifact.getArtifactId());
         }
     }
 
