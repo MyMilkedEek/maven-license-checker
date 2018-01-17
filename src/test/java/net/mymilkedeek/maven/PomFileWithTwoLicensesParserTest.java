@@ -10,28 +10,28 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author MyMilkedEek <Michael>
  */
 @RunWith(Parameterized.class)
-public class PomFileParserTest {
+public class PomFileWithTwoLicensesParserTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-                {LicenseResolver.MIT, "mit"},
-
-                {LicenseResolver.PROPRIETARY, "empty"},
-                {LicenseResolver.PROPRIETARY, "proprietary"}
+                {LicenseResolver.MIT, LicenseResolver.MPL, "mit-mpl"},
         });
     }
 
-    private License expected;
+    private License firstExpected;
+    private License secondExpected;
     private String pomName;
 
-    public PomFileParserTest(License expected, String pomName) {
-        this.expected = expected;
+    public PomFileWithTwoLicensesParserTest(License firstExpected, License secondExpected, String pomName) {
+        this.firstExpected = firstExpected;
+        this.secondExpected = secondExpected;
         this.pomName = pomName;
     }
 
@@ -41,7 +41,11 @@ public class PomFileParserTest {
         PomFileParser pomFileParser = new PomFileParser();
         PomFile actual = pomFileParser.parseFile(file);
 
-        Assert.assertEquals(expected.getName(), actual.getLicense().getName());
+        List<License> licenses = actual.getLicenses();
+
+        Assert.assertTrue(licenses.size() == 2);
+        Assert.assertEquals(firstExpected.getName(), licenses.get(0).getName());
+        Assert.assertEquals(secondExpected.getName(), licenses.get(1).getName());
     }
 
 }

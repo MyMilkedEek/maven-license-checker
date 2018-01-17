@@ -19,6 +19,7 @@ public class LicenseResolverTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
                 {LicenseResolver.MIT, "MIT"},
+                {LicenseResolver.MPL, "MPL"},
                 {LicenseResolver.PROPRIETARY, "totally-non-existant-license"}
         });
     }

@@ -26,4 +26,8 @@ public class PomFile {
     public License getLicense() {
         return this.licenses.get(0);
     }
+
+    public List<License> getLicenses() {
+        return this.licenses;
+    }
 }

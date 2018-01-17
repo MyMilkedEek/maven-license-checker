@@ -20,19 +20,21 @@ public class LicenseResolver {
     }
 
     public static final License MIT = instantiateLicense("MIT");
+    public static final License MPL = instantiateLicense("MPL");
     public static final License PROPRIETARY = instantiateLicense("Proprietary");
 
     private static Map<String, License> licenses;
 
-    static {
-        licenses = new HashMap<String, License>();
-
-        licenses.put("MIT", MIT);
-    }
-
-    private static License instantiateLicense(String licenseName) {
-        License license = new License();
+    private static License instantiateLicense(final String licenseName) {
+        final License license = new License();
         license.setName(licenseName);
+
+        if ( licenses == null ) {
+            licenses = new HashMap<>();
+        }
+
+        licenses.put(licenseName, license);
+
         return license;
     }
 }
