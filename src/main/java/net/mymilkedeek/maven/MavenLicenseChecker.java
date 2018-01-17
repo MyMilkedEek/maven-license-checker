@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * Checks a project for license incompatibilities with its defined license and that of its dependencies.
+ *
  * @goal check
  * @phase compile
  * @requiresProject true
@@ -21,7 +23,11 @@ import java.util.Set;
 public class MavenLicenseChecker extends AbstractMojo {
 
 
-
+    /**
+     * Entry point of the plugin.
+     *
+     * @throws MojoExecutionException when something goes wrong, logged to the output console of Maven
+     */
     public void execute() throws MojoExecutionException {
         getLog().info("Starting License Checker v 0.0.1");
 
@@ -56,6 +62,7 @@ public class MavenLicenseChecker extends AbstractMojo {
             getLog().info("   - " + pom.getLicense().getName() + " license found for " + artifact.getArtifactId());
         }
     }
+
     private List<License> resolveProjectLicenses(List<License> licenses) {
         List<License> output = new ArrayList<License>();
 

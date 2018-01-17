@@ -11,19 +11,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Utility class to parse a pom file.
+ *
  * @author MyMilkedEek <Michael>
  */
 public class PomFileParser {
 
+    // tag that starts a license entry
     private final String licenseTagStart = "<license>";
+
+    // tag that ends a license entry
     private final String licenseTagEnd   = "</license>";
+
+    // tag that starts a license name entry
     private final String nameTagStart    = "<name>";
+
+    // tag that ends a license name entry
     private final String nameTageEnd     = "</name>";
 
-    public PomFileParser() {
-        // empty constructor
-    }
-
+    /**
+     * Parses a java.io.File instance to a PomFile instance.
+     * Adds one or more license definitions to the PomFile instance.
+     * If no license has been defined in the pom file, then PROPRIETARY will be set.
+     *
+     * @param fileToBeParsed the pom file
+     * @return parsed PomFile instance
+     * @throws IOException when the java.io.File can't be found
+     */
     public PomFile parseFile(File fileToBeParsed) throws IOException {
         List<License> licenses = new ArrayList<>();
 
