@@ -14,7 +14,12 @@ public class LicenseResolverTest {
         resolutionHelper(LicenseResolver.PROPRIETARY, "totally-non-existant-license");
     }
 
-    public void resolutionHelper(License expected, String licenseName) {
+    @Test
+    public void mitLicense() {
+        resolutionHelper(LicenseResolver.MIT, "MIT");
+    }
+
+    private void resolutionHelper(final License expected, final String licenseName) {
         License actual = LicenseResolver.resolve(licenseName);
         Assert.assertEquals(expected.getName(), actual.getName());
     }

@@ -2,19 +2,36 @@ package net.mymilkedeek.maven;
 
 import org.apache.maven.model.License;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author MyMilkedEek <Michael>
  */
 public class LicenseResolver {
 
-    public static final License PROPRIETARY;
+    public static License resolve(String licenseName) {
 
-    static {
-        PROPRIETARY = new License();
-        PROPRIETARY.setName("Proprietary");
+        if ( licenses.containsKey(licenseName) ) {
+            return licenses.get(licenseName);
+        }
+
+        return PROPRIETARY;
     }
 
-    public static License resolve(String licenseName) {
-        return PROPRIETARY;
+    public static Map<String, License> licenses;
+    public static final License MIT = instantiateLicense("MIT");
+    public static final License PROPRIETARY = instantiateLicense("Proprietary");
+
+    static {
+        licenses = new HashMap<String, License>();
+
+        licenses.put("MIT", MIT);
+    }
+
+    private static License instantiateLicense(String licenseName) {
+        License license = new License();
+        license.setName(licenseName);
+        return license;
     }
 }
