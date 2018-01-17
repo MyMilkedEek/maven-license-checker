@@ -9,9 +9,6 @@ import org.apache.maven.project.MavenProject;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -55,34 +52,10 @@ public class MavenLicenseChecker extends AbstractMojo {
             getLog().info(" - " + artifact.getGroupId() + ":" + artifact.getArtifactId() + ":" + artifact.getVersion() + " found.");
             File artifactJar = artifact.getFile();
             File pomFile = new File(artifactJar.getAbsolutePath().replace(".jar", ".pom"));
-            String licenseInPom = getLicenseFromPomFile(pomFile);
-            getLog().info("   - " + licenseInPom + " license found for " + artifact.getArtifactId());
+            PomFile pom = new PomFileParser().parseFile(pomFile);
+            getLog().info("   - " + pom.getLicense().getName() + " license found for " + artifact.getArtifactId());
         }
     }
-
-    private String getLicenseFromPomFile(File pomFile) throws IOException {
-        byte[] encodedBytes = Files.readAllBytes(Paths.get(pomFile.getAbsolutePath()));
-        String pomContents = new String(encodedBytes, StandardCharsets.UTF_8);
-
-        int licenseIndex = pomContents.indexOf("<license>");
-
-        if ( licenseIndex > 0 ) {
-            int licenseEnd = pomContents.indexOf("</license>");
-
-            String licenseContents = pomContents.substring(licenseIndex, licenseEnd);
-
-            int nameIndex = licenseContents.indexOf("<name>");
-
-            if ( nameIndex > 0 ) {
-                int nameEnd = licenseContents.indexOf("</name>");
-
-                return licenseContents.substring(nameIndex + "<name>".length(), nameEnd);
-            }
-        }
-
-        return "Proprietary";
-    }
-
     private List<License> resolveProjectLicenses(List<License> licenses) {
         List<License> output = new ArrayList<License>();
 

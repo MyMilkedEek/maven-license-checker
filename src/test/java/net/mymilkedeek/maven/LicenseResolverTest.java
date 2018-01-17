@@ -12,7 +12,7 @@ import java.util.Collection;
 /**
  * @author MyMilkedEek <Michael>
  */
-@RunWith( Parameterized.class)
+@RunWith(Parameterized.class)
 public class LicenseResolverTest {
 
     @Parameterized.Parameters
