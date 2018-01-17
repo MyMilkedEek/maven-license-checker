@@ -1,6 +1,8 @@
 # maven-license-checker
 Maven plugin that checks whether your dependencies' licenses can work with the project's license.
 
+[![Build Status](https://travis-ci.org/MyMilkedEek/maven-license-checker.svg?branch=develop)](https://travis-ci.org/MyMilkedEek/maven-license-checker)
+
 ### Goal
 
 For v 1.0.0 the aim is the following:
