@@ -90,22 +90,16 @@ public class MavenLicenseChecker extends AbstractMojo {
             getLog().warn("No license found!");
             getLog().warn("This means that this project is assumed to have a proprietary license and that you probably will get a lot of false flags.");
             getLog().warn("Please correct your pom.xml to contain a valid <licenses> entry.");
-            output.add(resolveLicense("proprietary"));
+            output.add(LicenseResolver.resolve("proprietary"));
         } else {
             getLog().info(licenses.size() + " license(s) found." );
         }
 
         for ( License license : licenses ) {
             getLog().info(" - Found " + license.getName());
-            output.add(resolveLicense(license.getName()));
+            output.add(LicenseResolver.resolve(license.getName()));
         }
 
-        return output;
-    }
-
-    private License resolveLicense(String licenseNameAsInPom) {
-        License output = new License();
-        output.setName(licenseNameAsInPom);
         return output;
     }
 
