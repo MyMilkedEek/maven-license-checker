@@ -4,7 +4,7 @@
 
     <groupId>net.mymilkedeek</groupId>
     <artifactId>maven-license-checker</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>maven-plugin</packaging>
     <name>Maven License Checker</name>
     <url>http://maven.apache.org</url>
