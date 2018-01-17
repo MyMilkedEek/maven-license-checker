@@ -1,4 +1,4 @@
-package net.mymilkedeek;
+package net.mymilkedeek.maven;
 
 
 import org.apache.maven.artifact.Artifact;
