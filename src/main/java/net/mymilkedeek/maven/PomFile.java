@@ -2,18 +2,28 @@ package net.mymilkedeek.maven;
 
 import org.apache.maven.model.License;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @author MyMilkedEek <Michael>
  */
 public class PomFile {
 
-    private License license;
+    private List<License> licenses;
 
     public PomFile(License license) {
-        this.license = license;
+        this.licenses = new ArrayList<>();
+        this.licenses.add(license);
+    }
+
+    public PomFile(Collection<License> licenses) {
+        this.licenses = new ArrayList<>();
+        this.licenses.addAll(licenses);
     }
 
     public License getLicense() {
-        return license;
+        return this.licenses.get(0);
     }
 }
