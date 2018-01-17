@@ -19,9 +19,10 @@ public class LicenseResolver {
         return PROPRIETARY;
     }
 
-    public static Map<String, License> licenses;
     public static final License MIT = instantiateLicense("MIT");
     public static final License PROPRIETARY = instantiateLicense("Proprietary");
+
+    private static Map<String, License> licenses;
 
     static {
         licenses = new HashMap<String, License>();

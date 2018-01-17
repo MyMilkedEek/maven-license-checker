@@ -3,24 +3,37 @@ package net.mymilkedeek.maven;
 import org.apache.maven.model.License;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * @author MyMilkedEek <Michael>
  */
+@RunWith( Parameterized.class)
 public class LicenseResolverTest {
 
-    @Test
-    public void licenseNotFoundTest() {
-        resolutionHelper(LicenseResolver.PROPRIETARY, "totally-non-existant-license");
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+                {LicenseResolver.MIT, "MIT"},
+                {LicenseResolver.PROPRIETARY, "totally-non-existant-license"}
+        });
+    }
+
+    private final License expected;
+    private final String licenseName;
+
+    public LicenseResolverTest(License expected, String licenseName) {
+        this.expected = expected;
+        this.licenseName = licenseName;
     }
 
     @Test
-    public void mitLicense() {
-        resolutionHelper(LicenseResolver.MIT, "MIT");
-    }
-
-    private void resolutionHelper(final License expected, final String licenseName) {
-        License actual = LicenseResolver.resolve(licenseName);
-        Assert.assertEquals(expected.getName(), actual.getName());
+    public void resolveLicense() {
+        License actual = LicenseResolver.resolve(this.licenseName);
+        Assert.assertEquals(this.expected.getName(), actual.getName());
     }
 }
