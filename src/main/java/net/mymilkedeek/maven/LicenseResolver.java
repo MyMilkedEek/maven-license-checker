@@ -31,12 +31,12 @@ public class LicenseResolver {
     /**
      * MIT License
      */
-    public static final License MIT = instantiateLicense("MIT");
+    public static final License MIT = instantiateLicense("MIT", "MIT License");
 
     /**
      * MPL License
      */
-    public static final License MPL = instantiateLicense("MPL");
+    public static final License MPL = instantiateLicense("MPL", "Mozilla Public License");
 
     /**
      * Proprietary license
@@ -49,7 +49,7 @@ public class LicenseResolver {
     /**
      * Instantiates a license instance and adds it to the internal mapping
      */
-    private static License instantiateLicense(final String licenseName) {
+    private static License instantiateLicense(final String licenseName, final String...aliases) {
         final License license = new License();
         license.setName(licenseName);
 
@@ -58,6 +58,10 @@ public class LicenseResolver {
         }
 
         licenses.put(licenseName, license);
+
+        for (String alias : aliases) {
+            licenses.put(alias, license);
+        }
 
         return license;
     }
